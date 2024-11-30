@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const httpRequests = {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://localhost:4000',
     send: async (dispatch:any, action:any) => {
         const { url, method, data, onSuccess, onError } = action.payload;
         try {
