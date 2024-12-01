@@ -7,7 +7,6 @@ import { UserAddressDto } from './models/user_address.dto';
 
 @Injectable()
 export class UsersService {
-
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
@@ -30,6 +29,9 @@ export class UsersService {
   }
 
   async attachAddress(userAddressDto: UserAddressDto): Promise<void> {
-    await this.usersRepository.update({id:userAddressDto.user_id}, {address_id:userAddressDto.address_id});
+    await this.usersRepository.update(
+      { id: userAddressDto.user_id },
+      { address_id: userAddressDto.address_id },
+    );
   }
 }
