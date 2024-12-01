@@ -9,6 +9,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { jwtConstants } from './constants';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [
@@ -18,11 +20,19 @@ import { AuthController } from './auth.controller';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '300s' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, UsersService],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    UsersService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
 })
 export class AuthModule {}
 

@@ -29,11 +29,24 @@ export class ProductsService {
   }
 
   async update(id: string, values: ProductsDto): Promise<void> {
-    const dataWithDates = {
-      ...values,
-      updatedate: new Date(),
+    const currentProductValues: Products = await this.findOne(id);
+
+    const compareProductDto: ProductsDto = {
+      name: currentProductValues.name,
+      sku: currentProductValues.sku,
+      description: currentProductValues.description,
+      short_description: currentProductValues.short_description,
     };
-    await this.productsRepository.update(id, dataWithDates);
+
+    if (compareProductDto === values) {
+      console.log('No updated values provided');
+    } else {
+      const dataWithDates = {
+        ...values,
+        updatedate: new Date(),
+      };
+      await this.productsRepository.update(id, dataWithDates);
+    }
   }
 
   async remove(id: number): Promise<void> {
