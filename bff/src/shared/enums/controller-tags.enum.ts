@@ -3,4 +3,5 @@ export enum EndpointTags {
   Address = 'Address',
   Default = 'Default path',
   Products = 'Products',
+  Auth = 'Auth',
 }

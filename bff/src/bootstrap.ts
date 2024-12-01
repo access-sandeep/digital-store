@@ -46,5 +46,6 @@ function swaggerConfigugration(role: {
     .setTitle(role.title)
     .setDescription(role.description)
     .setVersion(role.version)
+    .addBearerAuth()
     .build();
 }
