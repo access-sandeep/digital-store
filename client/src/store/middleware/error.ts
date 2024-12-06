@@ -1,8 +1,8 @@
 const on_error = (store: any) => (next:any)  => async (action: any) => {
     switch(action.type) {
         case "tasks/errorActions":
-            // httpRequests.send(store.dispatch, action);
-            console.log("This is an error");
+        case "products/errorActions":
+            console.log("This is an error", action);
         break;
         default:
             next(action);

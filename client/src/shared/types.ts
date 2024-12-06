@@ -53,3 +53,22 @@ export type DispatchProducts = {
     type: string;
     payload: Array<PayloadProduct>;
 }
+
+export type PayloadLogin = {
+    url: string; 
+    method: string; 
+    data: ActionLoginDto;
+    onSuccess: string; 
+    onError: string;
+}
+
+export type ActionLoginDto = {
+    email: string;
+    password: string;
+    keepLogin: boolean;
+}
+
+export type DispatchLogin = {
+    type: string;
+    payload: PayloadLogin;
+}
