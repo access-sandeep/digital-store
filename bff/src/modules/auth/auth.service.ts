@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDto } from '../users/models/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,10 +20,5 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
     return accessToken;
-  }
-
-  async test(signInDto: LoginDto) {
-    console.log(signInDto);
-    return { message: `Your Login success!` };
   }
 }

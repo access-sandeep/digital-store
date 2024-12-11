@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import store from  "./store/configureStore";
 import Storecontext from './contexts/storeContext';
@@ -7,7 +7,6 @@ import HeaderAnnouncements from './modules/common/HeaderAnnouncements';
 import { Link, Outlet } from "react-router-dom";
 import Nav from './modules/common/Nav';
 import Footer from './modules/common/Footer';
-import { postLogin } from './store/login';
 import Login from './modules/Login';
 
 function getAuthorizedPage() {
@@ -85,65 +84,19 @@ function getAuthorizedPage() {
     </div>;
 }
 
-
-
 function App() {
-  const storeContext = useContext(Storecontext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [keepLogin, setKeepLogin] = useState(false);
-  const loggedIn = false;
-
-  function loginFormSubmit(evt: FormEvent<HTMLFormElement>) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    console.log(email);
-    console.log(password);
-    console.log(keepLogin);
-    storeContext.dispatch(postLogin({
-        url: "auth/login", 
-        method: "POST", 
-        data: { email, password, keepLogin }, 
-        onSuccess: "login/successActions", 
-        onError: "login/errorActions"
-    }));
-  }
-
-  function getLoginForm() {
-    return <div className="container">
-      <HeaderAnnouncements message="Login to continue ..." />
-      <div>
-        <form onSubmit={evt=>{
-          loginFormSubmit(evt);
-        }}>
-          <div className="form-group">
-            <label>Login email</label>
-            <input type="email" className="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-          </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" className="form-control" id="password" name="password" placeholder="Password" value={password}  onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div className="form-group form-check">
-            <input type="checkbox" className="form-check-input" id="persistence24" name="persistence24" onChange={(e) => { 
-              console.log()
-              return setKeepLogin(e.target.checked)
-            }} />
-            <label className="form-check-label">Keep me loggedIn for 24 hours</label>
-          </div>
-          <button type="submit" className="btn btn-primary" name="submit">Submit</button>
-        </form>         
-      </div>
-      <Footer />
-    </div>
-  }
+  const [loggedIn, setLoggedIn] = useState(false);
 
   let authorizedPage = <Login />;
+
+  const handelLoginSuccess = (auth: {access_token:string}) =>{
+    console.log(`Hey we received an access key on the App level as ${auth.access_token}`);
+    setLoggedIn(auth.access_token!=="");
+  }
   if(loggedIn) {
     authorizedPage = getAuthorizedPage();
   } else {
-    authorizedPage = <Login />;
+    authorizedPage = <Login onLoginSuccess={handelLoginSuccess} />;
   }
   return <Storecontext.Provider value={store as any}>{authorizedPage}</Storecontext.Provider>;
 }

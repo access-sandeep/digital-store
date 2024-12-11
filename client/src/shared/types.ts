@@ -68,7 +68,16 @@ export type ActionLoginDto = {
     keepLogin: boolean;
 }
 
+export type AccessToken = {
+    access_token: string;
+}
+
 export type DispatchLogin = {
     type: string;
     payload: PayloadLogin;
+}
+
+export type FetchLoginAction = {
+    type: string;
+    payload: AccessToken;
 }

@@ -1,26 +1,30 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import Storecontext from "../contexts/storeContext";
 import { postLogin } from "../store/login";
 import HeaderAnnouncements from './common/HeaderAnnouncements';
 import React from "react";
 import Footer from "./common/Footer";
 
-export default function Login() {
+export default function Login({onLoginSuccess}: any) {
     const store = useContext(Storecontext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [keepLogin, setKeepLogin] = useState(false);
+    const [accessToken, setAccessToken] =  useState({access_token: ""})
 
-    const unsubscribe = store.subscribe(()=>{
-        console.log(`subscribed`)
-    });
+    useEffect(()=>{
+      const unsubscribe = store.subscribe(()=>{
+        setAccessToken(store.getState().login[0]);
+        onLoginSuccess(store.getState().login[0]);
+        console.log(store.getState().login[0]);
+      });
+      // return unsubscribe();
+    }, [accessToken, store, onLoginSuccess]);
 
-    function loginFormSubmit(evt: FormEvent<HTMLFormElement>) {
+    async function loginFormSubmit(evt: FormEvent<HTMLFormElement>) {
         evt.preventDefault();
         evt.stopPropagation();
-        console.log(email);
-        console.log(password);
-        console.log(keepLogin);
+
         store.dispatch(postLogin({
             url: "auth/login", 
             method: "POST", 

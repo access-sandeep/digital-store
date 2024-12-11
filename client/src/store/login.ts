@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ActionLoginDto, DispatchLogin } from "../shared/types";
+import { AccessToken, DispatchLogin, FetchLoginAction } from "../shared/types";
 
 const loginSlice = createSlice({
     name: "login",
     initialState: [],
     reducers: {
         //  Action functions
-        postLogin: (state:Array<ActionLoginDto>, action:DispatchLogin) => {
+        postLogin: (state:Array<AccessToken>, action:DispatchLogin) => {
             console.log(`Requesting login...`)
         },
-        successActions: (state:Array<ActionLoginDto>, action:DispatchLogin) => {
-            console.log("Response received for the Login request");
-            console.log("State", state);
-            console.log("Action", action);
+        successActions: (state:Array<AccessToken>, action:FetchLoginAction) => {
+            state.push({
+                access_token: action.payload.access_token
+            });
         },
-        errorActions: (state:Array<ActionLoginDto>, action:DispatchLogin) => {
+        errorActions: (state:Array<AccessToken>, action:DispatchLogin) => {
             console.log("Error on success", action.payload);
         }
     }
