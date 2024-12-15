@@ -21,13 +21,10 @@ export default function Index({onLogout}: any) {
       }, [store]);
 
     const doLogout = (e:any)=>{
-        console.log(`Called from inside doLogout function ${(accessToken)}`, accessToken);
         e.stopPropagation();
         e.preventDefault();
-        store.dispatch(logout({
-            access_token: ""
-        }));
         setAccessToken({access_token: ""});
+        store.dispatch(logout(accessToken));
         onLogout();
         showDropDown(e);
     }

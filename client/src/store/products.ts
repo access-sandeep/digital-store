@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ActionProduct, DispatchProduct, DispatchProducts } from "../shared/types";
 
-let id = 0;
 const productSlice = createSlice({
     name: "products",
     initialState: [],
@@ -27,7 +26,6 @@ const productSlice = createSlice({
             state[index].updatedate = new Date();
         },
         fetchProduct: (state:any, action:DispatchProduct) => {
-            console.log("Fetch product called");
         },
         successActions: (state:Array<ActionProduct>, action:DispatchProducts) => {
             action.payload.forEach((product:any) => {
