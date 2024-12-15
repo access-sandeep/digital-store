@@ -33,6 +33,7 @@ export type ActionProduct = {
 export type PayloadProduct = {
     url: string; 
     method: string; 
+    token?: string;
     data: {
         id: string;
         name: string;
@@ -52,4 +53,32 @@ export type DispatchProduct = {
 export type DispatchProducts = {
     type: string;
     payload: Array<PayloadProduct>;
+}
+
+export type PayloadLogin = {
+    url: string; 
+    method: string; 
+    data: ActionLoginDto;
+    onSuccess: string; 
+    onError: string;
+}
+
+export type ActionLoginDto = {
+    email: string;
+    password: string;
+    keepLogin: boolean;
+}
+
+export type AccessToken = {
+    access_token: string;
+}
+
+export type DispatchLogin = {
+    type: string;
+    payload: PayloadLogin;
+}
+
+export type FetchLoginAction = {
+    type: string;
+    payload: AccessToken;
 }

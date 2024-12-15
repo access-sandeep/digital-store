@@ -20,7 +20,7 @@ import { AuthGuard } from './auth.guard';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '3600s' },
     }),
   ],
   controllers: [AuthController],
@@ -35,10 +35,3 @@ import { AuthGuard } from './auth.guard';
   ],
 })
 export class AuthModule {}
-
-/*
-@Module({
-  imports: [TypeOrmModule.forFeature([Products])],
-  controllers: [ProductsController],
-  providers: [ProductsService],
-}) */
