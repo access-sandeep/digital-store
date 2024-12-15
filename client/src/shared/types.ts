@@ -33,6 +33,7 @@ export type ActionProduct = {
 export type PayloadProduct = {
     url: string; 
     method: string; 
+    token?: string;
     data: {
         id: string;
         name: string;

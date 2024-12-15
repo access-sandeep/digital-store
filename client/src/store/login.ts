@@ -3,11 +3,15 @@ import { AccessToken, DispatchLogin, FetchLoginAction } from "../shared/types";
 
 const loginSlice = createSlice({
     name: "login",
-    initialState: [],
+    initialState: [] as Array<{access_token: string;}>,
     reducers: {
         //  Action functions
         postLogin: (state:Array<AccessToken>, action:DispatchLogin) => {
             console.log(`Requesting login...`)
+        },
+        logout: (state:Array<AccessToken>, action:FetchLoginAction) => {
+            state = [action.payload]
+            console.log(`Logging out...`);
         },
         successActions: (state:Array<AccessToken>, action:FetchLoginAction) => {
             state.push({
@@ -20,5 +24,5 @@ const loginSlice = createSlice({
     }
 });
 
-export const {postLogin, successActions, errorActions} = loginSlice.actions;
+export const {postLogin, logout, successActions, errorActions} = loginSlice.actions;
 export default loginSlice.reducer;

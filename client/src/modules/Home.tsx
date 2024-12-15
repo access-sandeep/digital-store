@@ -13,6 +13,7 @@ export default function Home() {
         store.dispatch(fetchProduct({
             url: "products", 
             method: "GET", 
+            token: store.getState().login[0].access_token,
             data: {
                 id: "N/A",
                 name: "N/A",

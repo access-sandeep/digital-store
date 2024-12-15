@@ -13,12 +13,11 @@ export default function Login({onLoginSuccess}: any) {
     const [accessToken, setAccessToken] =  useState({access_token: ""})
 
     useEffect(()=>{
-      const unsubscribe = store.subscribe(()=>{
+      store.subscribe(()=>{
         setAccessToken(store.getState().login[0]);
         onLoginSuccess(store.getState().login[0]);
         console.log(store.getState().login[0]);
       });
-      // return unsubscribe();
     }, [accessToken, store, onLoginSuccess]);
 
     async function loginFormSubmit(evt: FormEvent<HTMLFormElement>) {
