@@ -7,6 +7,7 @@ import Nav from './common/Nav';
 import { useContext, useEffect, useState } from 'react';
 import Storecontext from '../contexts/storeContext';
 import { logout } from '../store/login';
+import { showDropDown } from '../shared/animations/drop-down-menu';
 
 export default function Index({onLogout}: any) {
     const store = useContext(Storecontext);
@@ -18,20 +19,6 @@ export default function Index({onLogout}: any) {
           console.log("From Index",store.getState().login[0]);
         });
       }, [store]);
-
-    const showDropDown = (e:any)=>{
-        e.stopPropagation();
-        e.preventDefault();
-        const target = document.querySelector("[aria-labelledby='dropdownMenuButton']");
-        const isOpen = target?.getAttribute('data-open')==='yes';
-        if(isOpen) {
-            target?.setAttribute('style', 'display:none;');
-            target?.setAttribute('data-open', 'no');
-        } else { 
-            target?.setAttribute('style', 'display:block;');
-            target?.setAttribute('data-open', 'yes');
-        }
-    }
 
     const doLogout = (e:any)=>{
         console.log(`Called from inside doLogout function ${(accessToken)}`, accessToken);
