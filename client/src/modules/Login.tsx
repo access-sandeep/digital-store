@@ -16,7 +16,6 @@ export default function Login({onLoginSuccess}: any) {
       store.subscribe(()=>{
         setAccessToken(store.getState().login[0]);
         onLoginSuccess(store.getState().login[0]);
-        console.log(store.getState().login[0]);
       });
     }, [accessToken, store, onLoginSuccess]);
 
@@ -50,7 +49,6 @@ export default function Login({onLoginSuccess}: any) {
           </div>
           <div className="form-group form-check">
             <input type="checkbox" className="form-check-input" id="persistence24" name="persistence24" onChange={(e) => { 
-              console.log()
               return setKeepLogin(e.target.checked)
             }} />
             <label className="form-check-label">Keep me loggedIn for 24 hours</label>

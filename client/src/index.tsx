@@ -12,6 +12,7 @@ import {
 import ErrorPage from './modules/common/ErrorPage';
 import ContactUs from './modules/ContactUs';
 import Home from './modules/Home';
+import Products from './modules/Products';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,15 @@ const router = createBrowserRouter([
       {
         path: "contact-us/",
         element: <ContactUs />,
+      },
+      {
+        path: "products/",
+        children: [
+          {
+            path: "all/",
+            element: <Products />,
+          },
+        ]
       }
     ]
   }
@@ -39,7 +49,4 @@ root.render(
   <RouterProvider router={router} />
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

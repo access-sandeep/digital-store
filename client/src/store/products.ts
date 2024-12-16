@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ActionProduct, DispatchProduct, DispatchProducts } from "../shared/types";
 
-let id = 0;
 const productSlice = createSlice({
     name: "products",
     initialState: [],
@@ -27,19 +26,22 @@ const productSlice = createSlice({
             state[index].updatedate = new Date();
         },
         fetchProduct: (state:any, action:DispatchProduct) => {
-            console.log("Fetch product called");
         },
         successActions: (state:Array<ActionProduct>, action:DispatchProducts) => {
+            let product_ids: Array<string> = [];
             action.payload.forEach((product:any) => {
-                state.push({
-                    id: product.id,
-                    name: product.name,
-                    sku: product.sku,
-                    description: product.description,
-                    short_description: product.short_description,
-                    createddate: product.createddate,
-                    updatedate: product.updatedate
-                });
+                if(!product_ids.includes(product.id)) {
+                    state.push({
+                        id: product.id,
+                        name: product.name,
+                        sku: product.sku,
+                        description: product.description,
+                        short_description: product.short_description,
+                        createddate: product.createddate,
+                        updatedate: product.updatedate
+                    });
+                    product_ids.push(product.id);
+                }
             });
         },
         errorActions: (state, action) => {

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { showDropDown, closeDropDown } from "../../shared/animations/drop-down-menu";
 
 export default function Nav() {
   return (
@@ -9,9 +10,13 @@ export default function Nav() {
                     <Link className="nav-link" to={`/`}>Home</Link>
                 </li>
                 <li className="nav-item dropdown">
-                    <Link className="nav-link dropdown-toggle" to={`#`} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Product</Link>
+                    <Link className="nav-link dropdown-toggle" to={`#`} id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onClick={(e)=>{
+                        showDropDown(e);
+                    }}>Product</Link>
                     <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <Link className="dropdown-item" to={`#`}>Promo</Link>
+                        <Link className="dropdown-item" to={`/products/all`} onClick={(e)=>{
+                            closeDropDown(e);
+                        }}>All</Link>
                         <Link className="dropdown-item" to={`#`}>Action</Link>
                         <div className="dropdown-divider"></div>
                         <Link className="dropdown-item" to={`#`}>Another action</Link>

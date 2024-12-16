@@ -12,13 +12,11 @@ function App() {
   let authorizedPage = <Login />;
 
   const handelLoginSuccess = (auth: {access_token:string}) =>{
-    console.log(`Hey we received an access key on the App level as ${auth.access_token}`);
     setLoggedIn(auth.access_token!=="");
   }
 
   const handelLogout = () =>{
     setLoggedIn(false);
-    console.log(`You logged out successfully!`);
   }
 
   if(loggedIn) {
