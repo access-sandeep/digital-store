@@ -28,16 +28,20 @@ const productSlice = createSlice({
         fetchProduct: (state:any, action:DispatchProduct) => {
         },
         successActions: (state:Array<ActionProduct>, action:DispatchProducts) => {
+            let product_ids: Array<string> = [];
             action.payload.forEach((product:any) => {
-                state.push({
-                    id: product.id,
-                    name: product.name,
-                    sku: product.sku,
-                    description: product.description,
-                    short_description: product.short_description,
-                    createddate: product.createddate,
-                    updatedate: product.updatedate
-                });
+                if(!product_ids.includes(product.id)) {
+                    state.push({
+                        id: product.id,
+                        name: product.name,
+                        sku: product.sku,
+                        description: product.description,
+                        short_description: product.short_description,
+                        createddate: product.createddate,
+                        updatedate: product.updatedate
+                    });
+                    product_ids.push(product.id);
+                }
             });
         },
         errorActions: (state, action) => {

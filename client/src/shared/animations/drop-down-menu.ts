@@ -13,4 +13,16 @@ const showDropDown = (e:any)=>{
     }
 }
 
-export {showDropDown};
+const closeDropDown = (e:any)=>{
+    const target = e.target.parentElement;
+    const isOpen = target?.getAttribute('data-open')==='yes';
+    if(isOpen) {
+        target?.setAttribute('style', 'display:none;');
+        target?.setAttribute('data-open', 'no');
+    } else { 
+        target?.setAttribute('style', 'display:block;');
+        target?.setAttribute('data-open', 'yes');
+    }
+}
+
+export {showDropDown, closeDropDown};
