@@ -2,6 +2,7 @@ import Storecontext from "../contexts/storeContext";
 import { useContext, useEffect, useState } from "react";
 import { fetchProduct } from "../store/products";
 import { ActionProduct } from "../shared/types";
+import ProductCard from "./common/ProductCard";
 
 export default function Products() {
     const store = useContext(Storecontext);
@@ -36,18 +37,11 @@ export default function Products() {
    
     return (
         <>
-            <h1>The list of products</h1>
-            <ul>
+            <div className="row">
                 {products.map((p,k)=>{
-                    return <li key={p?.id+'_'+k}>
-                        <div>
-                            <b>{p.name}</b> <sup>({p.sku})</sup>
-                            <p>{p.short_description}</p>
-                            <p>{p.description}</p>
-                        </div>
-                    </li>
+                    return <ProductCard product={p} />
                 })}
-            </ul>
+            </div>
         </>
     )
 }
