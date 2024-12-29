@@ -141,17 +141,18 @@ SELECT * FROM products;
 -- 3 rows in set (0.00 sec)
 
 CREATE TABLE cart (
-    id VARCHAR(36) NOT NULL AUTO_INCREMENT,
+    id VARCHAR(36) NOT NULL,
     cart_type ENUM("buy_now", "saved") NOT NULL DEFAULT "buy_now",
     expiry_number INT NOT NULL DEFAULT 0,
     expiry_unit ENUM("DAYS", "WEEKS", "MONTHS", "YEARS") DEFAULT "MONTHS",
-    active ENUM("YES_ACTIVE", "NO_ITS_EXPIRED", "NO_ITS_ORDERED") DEFAULT "YES_ACTIVE" 
-    createddate datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    active ENUM("YES_ACTIVE", "NO_ITS_EXPIRED", "NO_ITS_ORDERED") DEFAULT "YES_ACTIVE", 
+    createddate DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     PRIMARY KEY (id)
 );
+-- Query OK, 0 rows affected (0.11 sec)
 
 CREATE TABLE cart_details  (
-    id VARCHAR(36) NOT NULL AUTO_INCREMENT,
+    id VARCHAR(36) NOT NULL,
     user_id INT,
     cart_id VARCHAR(36),
     product_id VARCHAR(36),
@@ -159,22 +160,29 @@ CREATE TABLE cart_details  (
     total_price DECIMAL NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (cart_id) REFERENCES cart(id)
+    FOREIGN KEY (cart_id) REFERENCES cart(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+-- Query OK, 0 rows affected (0.07 sec)
 
-CREATE TABLE Persons (
-    PersonID int,
-    LastName varchar(255),
-    FirstName varchar(255),
-    Address varchar(255),
-    City varchar(255)
+CREATE TABLE orders (
+    id VARCHAR(36) NOT NULL,
+    cart_id VARCHAR(36),
+    total_price DECIMAL DEFAULT 0,
+    ordered_datetime DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    tentative_delivery DATETIME(6),
+    PRIMARY KEY (id),
+    FOREIGN KEY (cart_id) REFERENCES cart(id)
 );
+-- Query OK, 0 rows affected (0.05 sec)
 
-CREATE TABLE Persons (
-    PersonID int,
-    LastName varchar(255),
-    FirstName varchar(255),
-    Address varchar(255),
-    City varchar(255)
+CREATE TABLE transactions (
+    id VARCHAR(36) NOT NULL,
+    order_id VARCHAR(36),
+    payment_mode ENUM("credit_card", "debit_card", "wallet", "cash") NOT NULL DEFAULT "cash",
+    bank VARCHAR(128),
+    transaction_date_time DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES orders(id)
 );
+-- Query OK, 0 rows affected (0.05 sec)
