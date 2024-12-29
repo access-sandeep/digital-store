@@ -23,6 +23,18 @@ export class Products {
   @Column()
   short_description: string;
 
+  @Column()
+  stock_left: number;
+
+  @Column()
+  price: number;
+
+  @Column()
+  discount: number;
+
+  @Column()
+  max_order_units: number;
+
   @CreateDateColumn()
   createddate: Date;
 

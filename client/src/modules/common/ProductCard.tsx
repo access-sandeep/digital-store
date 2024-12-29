@@ -15,7 +15,7 @@ export default function ProductCard({product}:any) {
                     <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
                     <button type="button" className="btn btn-sm btn-outline-secondary">Buy</button>
                 </div>
-                <small className="text-muted">9 mins</small>
+                <small className="text-muted">by 23rd December</small>
                 </div>
             </div>
             </div>

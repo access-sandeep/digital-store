@@ -36,6 +36,10 @@ export class ProductsService {
       sku: currentProductValues.sku,
       description: currentProductValues.description,
       short_description: currentProductValues.short_description,
+      stock_left: currentProductValues.stock_left,
+      price: currentProductValues.price,
+      discount: currentProductValues.discount,
+      max_order_units: currentProductValues.max_order_units,
     };
 
     if (compareProductDto === values) {
