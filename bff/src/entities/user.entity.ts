@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+import { Address } from './address.entity';
 
 @Entity('users')
 export class User {
@@ -11,6 +18,10 @@ export class User {
   @Column()
   address_id: number;
 
+  @OneToMany(() => Address, (address) => address.user)
+  @JoinColumn()
+  addresses: Address[];
+
   @Column()
   email: string;
 
@@ -19,7 +30,7 @@ export class User {
 
   @Column()
   full_name: string;
-  
+
   @Column()
   createddate: Date;
 

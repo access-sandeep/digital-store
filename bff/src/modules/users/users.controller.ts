@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from 'src/entities/user.entity';
 import { UsersDto } from './models/users.dto';
@@ -26,6 +26,11 @@ export class UsersController {
   @Post()
   async add(@Body() usersDto: UsersDto) {
     await this.usersService.add(usersDto);
+  }
+
+  @Put(':id')
+  async put(@Param('id') id: string, @Body() usersDto: UsersDto) {
+    await this.usersService.update(id, usersDto);
   }
 
   @Post('address')

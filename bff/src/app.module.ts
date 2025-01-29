@@ -10,6 +10,8 @@ import { Products } from './entities/product.entity';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppController } from './app.controller';
 import { CorsMiddleware } from './middlewares/common/cors.middleware';
+import { CartModule } from './modules/cart/cart.module';
+import { Cart } from './entities/cart.entity';
 
 @Module({
   imports: [
@@ -20,13 +22,14 @@ import { CorsMiddleware } from './middlewares/common/cors.middleware';
       username: 'root',
       password: 'root',
       database: 'dukan',
-      entities: [User, Address, Products],
+      entities: [User, Address, Products, Cart],
       synchronize: true,
     }),
     UsersModule,
     AddressModule,
     ProductsModule,
     AuthModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [],

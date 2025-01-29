@@ -11,7 +11,7 @@ import { showDropDown } from '../shared/animations/drop-down-menu';
 
 export default function Index({onLogout}: any) {
     const store = useContext(Storecontext);
-    const [accessToken, setAccessToken] =  useState({access_token: ""});
+    const [accessToken, setAccessToken] =  useState({access_token: "", user_id:""});
     
     useEffect(()=>{
         store.subscribe(()=>{
@@ -23,7 +23,7 @@ export default function Index({onLogout}: any) {
     const doLogout = (e:any)=>{
         e.stopPropagation();
         e.preventDefault();
-        setAccessToken({access_token: ""});
+        setAccessToken({access_token: "", user_id:""});
         store.dispatch(logout(accessToken));
         onLogout();
         showDropDown(e);
