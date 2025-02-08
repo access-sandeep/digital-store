@@ -19,7 +19,7 @@ export class Address {
 
   @Column()
   city: string;
-  
+
   @Column()
   postcode: string;
 }

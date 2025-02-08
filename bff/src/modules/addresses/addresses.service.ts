@@ -6,7 +6,6 @@ import { AddressDto } from './models/address.dto';
 
 @Injectable()
 export class AddressService {
-
   constructor(
     @InjectRepository(Address)
     private addressRepository: Repository<Address>,
@@ -22,5 +21,9 @@ export class AddressService {
 
   async remove(id: number): Promise<void> {
     await this.addressRepository.delete(id);
+  }
+
+  async update(id: string, values: AddressDto): Promise<void> {
+    await this.addressRepository.update(id, values);
   }
 }

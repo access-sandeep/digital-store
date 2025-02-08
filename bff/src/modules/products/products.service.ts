@@ -11,12 +11,12 @@ export class ProductsService {
     private productsRepository: Repository<Products>,
   ) {}
 
-  findAll(): Promise<Products[]> {
-    return this.productsRepository.find();
+  async findAll(): Promise<Products[]> {
+    return await this.productsRepository.find();
   }
 
-  findOne(id: string): Promise<Products | null> {
-    return this.productsRepository.findOneBy({ id });
+  async findOne(id: string): Promise<Products | null> {
+    return await this.productsRepository.findOneBy({ id });
   }
 
   async add(values: ProductsDto): Promise<void> {
@@ -36,6 +36,10 @@ export class ProductsService {
       sku: currentProductValues.sku,
       description: currentProductValues.description,
       short_description: currentProductValues.short_description,
+      stock_left: currentProductValues.stock_left,
+      price: currentProductValues.price,
+      discount: currentProductValues.discount,
+      max_order_units: currentProductValues.max_order_units,
     };
 
     if (compareProductDto === values) {

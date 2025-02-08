@@ -4,4 +4,6 @@ export enum EndpointTags {
   Default = 'Default path',
   Products = 'Products',
   Auth = 'Auth',
+  Cart = 'Cart',
+  CartDetails = 'Cart Details',
 }

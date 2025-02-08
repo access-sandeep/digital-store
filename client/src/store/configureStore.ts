@@ -1,6 +1,7 @@
 import taskReducer from "./task";
 import productsReducer from "./products";
-import loginReducer from "./login"
+import loginReducer from "./login";
+import cartReducer from "./cart";
 
 import {
     configureStore
@@ -12,7 +13,8 @@ const store = configureStore({
     reducer: {
         task: taskReducer,
         products: productsReducer,
-        login: loginReducer
+        login: loginReducer,
+        cart: cartReducer,
     },
     middleware:  (gDM) => gDM().concat(http_request, on_error)
 });

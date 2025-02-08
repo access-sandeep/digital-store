@@ -3,7 +3,7 @@ import { AccessToken, DispatchLogin, FetchLoginAction } from "../shared/types";
 
 const loginSlice = createSlice({
     name: "login",
-    initialState: [] as Array<{access_token: string;}>,
+    initialState: [] as Array<{access_token: string; user_id: string}>,
     reducers: {
         //  Action functions
         postLogin: (state:Array<AccessToken>, action:DispatchLogin) => {
@@ -15,11 +15,12 @@ const loginSlice = createSlice({
         },
         successActions: (state:Array<AccessToken>, action:FetchLoginAction) => {
             state.push({
-                access_token: action.payload.access_token
+                access_token: action.payload.access_token,
+                user_id: action.payload.user_id
             });
         },
         errorActions: (state:Array<AccessToken>, action:DispatchLogin) => {
-            console.log("Error on success", action.payload);
+            return console.log("Error on success", action.payload);
         }
     }
 });

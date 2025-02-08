@@ -1,5 +1,5 @@
 import React from "react";
-export default function ProductCard({product}:any) {
+export default function ProductCard({product, onAddToCart}:any) {
     return (
         <div className="col-md-4">
             <div className="card mb-4 box-shadow">
@@ -13,9 +13,11 @@ export default function ProductCard({product}:any) {
                 <div className="d-flex justify-content-between align-items-center">
                 <div className="btn-group">
                     <button type="button" className="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" className="btn btn-sm btn-outline-secondary">Buy</button>
+                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e)=>{
+                        onAddToCart(e, product);
+                    }}>Add to cart</button>
                 </div>
-                <small className="text-muted">9 mins</small>
+                <small className="text-muted">by 23rd December</small>
                 </div>
             </div>
             </div>

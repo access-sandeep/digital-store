@@ -31,4 +31,33 @@ export class ProductsDto {
   })
   @IsString()
   short_description: string;
+
+  @ApiProperty({
+    description:
+      'How many units for the particular unit is remaining in the stock',
+    example: 100,
+  })
+  @IsString()
+  stock_left: number;
+
+  @ApiProperty({
+    description: 'Price of the procuct',
+    example: 100.67,
+  })
+  @IsString()
+  price: number;
+
+  @ApiProperty({
+    description: 'Discount percentage on the product',
+    example: 10.0,
+  })
+  @IsString()
+  discount: number;
+
+  @ApiProperty({
+    description: 'Maximum order acceptable for a particulat transaction',
+    example: 10.0,
+  })
+  @IsString()
+  max_order_units: number;
 }

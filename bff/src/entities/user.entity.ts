@@ -19,7 +19,7 @@ export class User {
 
   @Column()
   full_name: string;
-  
+
   @Column()
   createddate: Date;
 

@@ -12,16 +12,20 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll(): Promise<User[]> {
+    return await this.usersRepository.find();
   }
 
-  findOne(email: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ email });
+  async findOne(email: string): Promise<User | null> {
+    return await this.usersRepository.findOneBy({ email });
   }
 
   async add(values: UsersDto): Promise<void> {
     await this.usersRepository.insert(values);
+  }
+
+  async update(id: string, values: UsersDto): Promise<void> {
+    await this.usersRepository.update(id, values);
   }
 
   async remove(id: number): Promise<void> {
