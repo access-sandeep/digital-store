@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  JoinColumn,
-} from 'typeorm';
-import { Address } from './address.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -17,10 +10,6 @@ export class User {
 
   @Column()
   address_id: number;
-
-  @OneToMany(() => Address, (address) => address.user)
-  @JoinColumn()
-  addresses: Address[];
 
   @Column()
   email: string;

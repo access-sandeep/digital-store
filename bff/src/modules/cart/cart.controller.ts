@@ -12,30 +12,42 @@ import { CartDto } from './models/cart.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { EndpointTags } from 'src/shared/enums/controller-tags.enum';
 import { Cart } from 'src/entities/cart.entity';
-import { CartUserProduct } from 'src/entities/cart_user_product.entity copy';
 
 @Controller('cart')
 @ApiTags(EndpointTags.Cart)
 export class CartController {
-  constructor(private readonly CartService: CartService) {}
+  constructor(private readonly cartService: CartService) {}
 
   @Get()
   async findAll(): Promise<Cart[]> {
-    return await this.CartService.findAll();
+    return await this.cartService.findAll();
   }
 
   @Get(':id')
   async findById(@Param('id') id: string): Promise<Cart> {
-    return await this.CartService.findOne(id);
+    return await this.cartService.findOne(id);
   }
 
   @Post()
-  async add(@Body() CartDto: CartDto) {
-    await this.CartService.add(CartDto);
+  async add(@Body() cartDto: CartDto) {
+    await this.cartService.add(cartDto);
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() cartDto: CartDto,
+  ): Promise<void> {
+    await this.cartService.update(id, cartDto);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    await this.CartService.remove(id);
+    await this.cartService.remove(id);
+  }
+
+  @Delete()
+  async clear() {
+    await this.cartService.clear();
   }
 }

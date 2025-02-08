@@ -15,4 +15,18 @@ export class CartDetailsDto {
   })
   @IsNumber()
   user_id: number;
+
+  @ApiProperty({
+    description: 'quantity of the product selected',
+    example: 2,
+  })
+  @IsNumber()
+  quantity: number;;
+
+  @ApiProperty({
+    description: 'Total price of the product * quantity selected',
+    example: 564.65,
+  })
+  @IsNumber()
+  total_price: number;
 }

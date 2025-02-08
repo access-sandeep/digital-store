@@ -11,12 +11,12 @@ export class ProductsService {
     private productsRepository: Repository<Products>,
   ) {}
 
-  findAll(): Promise<Products[]> {
-    return this.productsRepository.find();
+  async findAll(): Promise<Products[]> {
+    return await this.productsRepository.find();
   }
 
-  findOne(id: string): Promise<Products | null> {
-    return this.productsRepository.findOneBy({ id });
+  async findOne(id: string): Promise<Products | null> {
+    return await this.productsRepository.findOneBy({ id });
   }
 
   async add(values: ProductsDto): Promise<void> {

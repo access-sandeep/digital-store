@@ -151,6 +151,19 @@ CREATE TABLE cart (
 );
 -- Query OK, 0 rows affected (0.11 sec)
 
+-- mysql> describe cart;
+-- +---------------+--------------+------+-----+----------------------+-------------------+
+-- | Field         | Type         | Null | Key | Default              | Extra             |
+-- +---------------+--------------+------+-----+----------------------+-------------------+
+-- | id            | varchar(36)  | NO   | PRI | NULL                 |                   |
+-- | expiry_number | int          | NO   |     | NULL                 |                   |
+-- | createddate   | datetime(6)  | NO   |     | CURRENT_TIMESTAMP(6) | DEFAULT_GENERATED |
+-- | cart_type     | varchar(255) | NO   |     | NULL                 |                   |
+-- | expiry_unit   | varchar(255) | NO   |     | NULL                 |                   |
+-- | active        | varchar(255) | NO   |     | NULL                 |                   |
+-- +---------------+--------------+------+-----+----------------------+-------------------+
+-- 6 rows in set (0.00 sec)
+
 CREATE TABLE cart_details  (
     id VARCHAR(36) NOT NULL,
     user_id INT,
@@ -164,6 +177,34 @@ CREATE TABLE cart_details  (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 -- Query OK, 0 rows affected (0.07 sec)
+-- mysql> describe cart_details;
+-- +-------------+---------------+------+-----+---------+-------+
+-- | Field       | Type          | Null | Key | Default | Extra |
+-- +-------------+---------------+------+-----+---------+-------+
+-- | id          | varchar(36)   | NO   | PRI | NULL    |       |
+-- | user_id     | int           | YES  | MUL | NULL    |       |
+-- | cart_id     | varchar(36)   | YES  | MUL | NULL    |       |
+-- | product_id  | varchar(36)   | YES  | MUL | NULL    |       |
+-- | quantity    | int           | NO   |     | 1       |       |
+-- | total_price | decimal(10,0) | NO   |     | 0       |       |
+-- +-------------+---------------+------+-----+---------+-------+
+-- 6 rows in set (0.00 sec)
+
+-- mysql> SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'cart_details'
+--     -> ;
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME     | TABLE_CATALOG | TABLE_SCHEMA | TABLE_NAME   | COLUMN_NAME | ORDINAL_POSITION | POSITION_IN_UNIQUE_CONSTRAINT | REFERENCED_TABLE_SCHEMA | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | def                | dukan             | PRIMARY             | def           | dukan        | cart_details | id          |                1 |                          NULL | NULL                    | NULL                  | NULL                   |
+-- | def                | dukan             | cart_details_ibfk_1 | def           | dukan        | cart_details | user_id     |                1 |                             1 | dukan                   | user                  | id                     |
+-- | def                | dukan             | cart_details_ibfk_2 | def           | dukan        | cart_details | cart_id     |                1 |                             1 | dukan                   | cart                  | id                     |
+-- | def                | dukan             | cart_details_ibfk_3 | def           | dukan        | cart_details | product_id  |                1 |                             1 | dukan                   | products              | id                     |
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- 4 rows in set (0.00 sec)
+-- ## Removing the CONSTRAINT
+ALTER TABLE cart_details DROP FOREIGN KEY cart_details_ibfk_1;
+ALTER TABLE cart_details DROP FOREIGN KEY cart_details_ibfk_2;
+ALTER TABLE cart_details DROP FOREIGN KEY cart_details_ibfk_3;
 
 CREATE TABLE orders (
     id VARCHAR(36) NOT NULL,
@@ -176,6 +217,29 @@ CREATE TABLE orders (
 );
 -- Query OK, 0 rows affected (0.05 sec)
 
+-- mysql> describe orders;
+-- +--------------------+---------------+------+-----+----------------------+-------------------+
+-- | Field              | Type          | Null | Key | Default              | Extra             |
+-- +--------------------+---------------+------+-----+----------------------+-------------------+
+-- | id                 | varchar(36)   | NO   | PRI | NULL                 |                   |
+-- | cart_id            | varchar(36)   | YES  | MUL | NULL                 |                   |
+-- | total_price        | decimal(10,0) | YES  |     | 0                    |                   |
+-- | ordered_datetime   | datetime(6)   | NO   |     | CURRENT_TIMESTAMP(6) | DEFAULT_GENERATED |
+-- | tentative_delivery | datetime(6)   | YES  |     | NULL                 |                   |
+-- +--------------------+---------------+------+-----+----------------------+-------------------+
+-- 5 rows in set (0.00 sec)
+
+-- mysql> SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'orders';
+-- +--------------------+-------------------+-----------------+---------------+--------------+------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | TABLE_CATALOG | TABLE_SCHEMA | TABLE_NAME | COLUMN_NAME | ORDINAL_POSITION | POSITION_IN_UNIQUE_CONSTRAINT | REFERENCED_TABLE_SCHEMA | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
+-- +--------------------+-------------------+-----------------+---------------+--------------+------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | def                | dukan             | PRIMARY         | def           | dukan        | orders     | id          |                1 |                          NULL | NULL                    | NULL                  | NULL                   |
+-- | def                | dukan             | orders_ibfk_1   | def           | dukan        | orders     | cart_id     |                1 |                             1 | dukan                   | cart                  | id                     |
+-- +--------------------+-------------------+-----------------+---------------+--------------+------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- 2 rows in set (0.00 sec)
+-- ## Removing the CONSTRAINT
+ALTER TABLE orders DROP FOREIGN KEY orders_ibfk_1;
+
 CREATE TABLE transactions (
     id VARCHAR(36) NOT NULL,
     order_id VARCHAR(36),
@@ -186,3 +250,28 @@ CREATE TABLE transactions (
     FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 -- Query OK, 0 rows affected (0.05 sec)
+
+-- mysql> describe transactions;
+-- +-----------------------+--------------------------------------------------+------+-----+----------------------+-------------------+
+-- | Field                 | Type                                             | Null | Key | Default              | Extra             |
+-- +-----------------------+--------------------------------------------------+------+-----+----------------------+-------------------+
+-- | id                    | varchar(36)                                      | NO   | PRI | NULL                 |                   |
+-- | order_id              | varchar(36)                                      | YES  | MUL | NULL                 |                   |
+-- | payment_mode          | enum('credit_card','debit_card','wallet','cash') | NO   |     | cash                 |                   |
+-- | bank                  | varchar(128)                                     | YES  |     | NULL                 |                   |
+-- | transaction_date_time | datetime(6)                                      | NO   |     | CURRENT_TIMESTAMP(6) | DEFAULT_GENERATED |
+-- +-----------------------+--------------------------------------------------+------+-----+----------------------+-------------------+
+-- 5 rows in set (0.00 sec)
+
+
+-- mysql> SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_NAME = 'transactions';
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME     | TABLE_CATALOG | TABLE_SCHEMA | TABLE_NAME   | COLUMN_NAME | ORDINAL_POSITION | POSITION_IN_UNIQUE_CONSTRAINT | REFERENCED_TABLE_SCHEMA | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- | def                | dukan             | PRIMARY             | def           | dukan        | transactions | id          |                1 |                          NULL | NULL                    | NULL                  | NULL                   |
+-- | def                | dukan             | transactions_ibfk_1 | def           | dukan        | transactions | order_id    |                1 |                             1 | dukan                   | orders                | id                     |
+-- +--------------------+-------------------+---------------------+---------------+--------------+--------------+-------------+------------------+-------------------------------+-------------------------+-----------------------+------------------------+
+-- 2 rows in set (0.01 sec)
+
+-- ## Removing the CONSTRAINT
+ALTER TABLE transactions DROP FOREIGN KEY transactions_ibfk_1;

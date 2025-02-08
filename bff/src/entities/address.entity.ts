@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
-import { User } from './user.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('address')
 export class Address {
@@ -29,8 +22,4 @@ export class Address {
 
   @Column()
   postcode: string;
-
-  @ManyToOne(() => User, (user) => user.addresses)
-  @JoinColumn()
-  user: User;
 }
