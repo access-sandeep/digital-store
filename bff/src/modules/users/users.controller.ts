@@ -1,21 +1,21 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from 'src/entities/user.entity';
-import { UsersDto } from './models/users.dto';
-import { UserAddressDto } from './models/user_address.dto';
+// import { UsersDto } from './models/users.dto';
+// import { UserAddressDto } from './models/user_address.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { EndpointTags } from 'src/shared/enums/controller-tags.enum';
-import { Public } from 'src/guards/decorators/public';
+import { UserDecorator } from '../../decorators/user-decorator/User.decorator'
+import { Passport } from 'src/shared/models/passport';
 
 @Controller('users')
 @ApiTags(EndpointTags.User)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Public()
   @Get()
-  async findAll(): Promise<User[]> {
-    return await this.usersService.findAll();
+  async findAll(@UserDecorator() passport: string): Promise<User[]> {
+    return await this.usersService.findAll(passport);
   }
 
   @Get(':email')
@@ -23,18 +23,18 @@ export class UsersController {
     return await this.usersService.findOne(email);
   }
 
-  @Post()
-  async add(@Body() usersDto: UsersDto) {
-    await this.usersService.add(usersDto);
-  }
+  // @Post()
+  // async add(@Body() usersDto: UsersDto) {
+  //   await this.usersService.add(usersDto);
+  // }
 
-  @Put(':id')
-  async put(@Param('id') id: string, @Body() usersDto: UsersDto) {
-    await this.usersService.update(id, usersDto);
-  }
+  // @Put(':id')
+  // async put(@Param('id') id: string, @Body() usersDto: UsersDto) {
+  //   await this.usersService.update(id, usersDto);
+  // }
 
-  @Post('address')
-  async attachAddress(@Body() userAddressDto: UserAddressDto) {
-    await this.usersService.attachAddress(userAddressDto);
-  }
+  // @Post('address')
+  // async attachAddress(@Body() userAddressDto: UserAddressDto) {
+  //   await this.usersService.attachAddress(userAddressDto);
+  // }
 }
