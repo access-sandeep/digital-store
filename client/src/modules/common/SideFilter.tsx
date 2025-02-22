@@ -69,10 +69,10 @@ export default function SideFilter() {
                     <h3 className="h6">Price range</h3>
                     <PriceInput name="min_price" id="min_price" label="Min" labelId="min_label" ariaLabel="Minimum price" onChangeValue={(e:any)=>{
                         onChangeValue(e, 'min_price', compareMaxMin);
-                    }} />
+                    }} value={minPrice} />
                     <PriceInput name="max_price" id="max_price" label="Max" labelId="min_label" ariaLabel="Maximum price" onChangeValue={(e:any)=>{
                         onChangeValue(e, 'max_price', compareMaxMin);
-                    }} />
+                    }} value={maxPrice}  />
                     {priceDiff>=0?null:<div className="row"><div className="col-12 m-0 p-0 text-danger small">Minimum price can not be more than maximum price</div></div>}
                 </div>
             </div>
@@ -104,7 +104,7 @@ function Checkbox({value, checkboxLabel}: CheckboxType) {
     );
 }
 
-function PriceInput({label, labelId, name, id, ariaLabel, onChangeValue}: PriceInputType) {
+function PriceInput({label, labelId, name, id, ariaLabel, onChangeValue, value}: PriceInputType) {
     const [numberWarning, setNumberWarning] = useState(true);
     function verifyNumber(e:any) {
         e.preventDefault();

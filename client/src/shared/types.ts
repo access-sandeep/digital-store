@@ -13,6 +13,7 @@ export type PriceInputType = {
     name: string;
     ariaLabel?: string;
     onChangeValue?:Function;
+    value?:number;
 }
 
 export type SubmitType = {
