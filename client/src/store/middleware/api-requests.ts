@@ -6,6 +6,7 @@ const http_request = ({dispatch, getState}: any) => (next:any)  => async (action
         case "products/httpRequest":
         case "products/fetchProduct":
         case "login/postLogin":
+        case "cart/postCart":
             httpRequests.send(dispatch, action);
         break;
         default:
